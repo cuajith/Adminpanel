@@ -1,0 +1,147 @@
+/*================================================================================= 
+Registration page
+=================================================================================*/
+.signup-page-image {
+  width: 588px !important;
+  height: 473px !important;
+}
+
+@media (max-width : 992px) {
+  .signup-page-image {
+    width: 365px !important;
+    height: 300px !important;
+  }
+}
+
+/*================================================================================= 
+Login Page 
+=================================================================================*/
+element.style  {
+  padding: 9px 150px 11px 4px !important;
+  font-weight: 500;
+}
+
+.g-signin {
+  float:none;
+  position:static;
+  /* margin:auto; */
+  width: 340px;
+  padding: 0px 10px 0px 4px !important;
+}
+
+.facebook-login {
+  width:max-content;
+  margin-top: 20px;
+}
+
+.kep-login-facebook.metro {
+  width: 340px;
+  padding: 10px 10px 10px 4px !important;
+  font-size: 12px;
+}
+
+.Log-in {
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+.Login-para {
+  font-size: 12px !important;
+}
+
+.digikaagaz-login {
+ text-align: center !important;
+ margin-top: 20% !important
+}
+
+.or-option {
+ display: flex;
+ flex-direction: row;
+ color: #989898;
+ font-size: 15px;
+}
+
+.or-option p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.or-option hr {
+  width: 300px;
+}
+
+.social-app-login {
+  display: flex;
+  width: 100px !important;
+}
+
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forget-password {
+  text-decoration: none;
+  font-size: 12px;
+  float: right;
+}
+
+.sign-up {
+  text-decoration: none;
+}
+
+.sign-up:hover {
+  text-decoration: underline;
+}
+
+@media (max-width : 992px) {
+
+  .digikaagaz-login {
+    text-align: center !important;
+  }
+
+  .g-signin {
+    float:none;
+    position:static;
+    width: 230px;
+    padding: 0px 0px 0px 4px !important;
+  }
+
+  .kep-login-facebook.metro {
+    width: 230px;
+    padding: 10px 10px 10px 4px !important;
+    font-size: 12px;
+  }
+}
+
+/*================================================================================= 
+Reset Password 
+=================================================================================*/
+.reset-password-head {
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+
+.pwd-container {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.pwd-container input {
+  padding: 5px 30px 5px 10px;
+  font-size: 20px;
+}
+
+.pwd-container img {
+  cursor: pointer;
+  position: absolute;
+  width: 20px;
+  right: 8px;
+  top: 8px;
+}
+
+::placeholder {
+  font-size: 12px;
+}

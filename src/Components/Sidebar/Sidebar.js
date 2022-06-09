@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import data from "../../Data/Data";
 import Submenu from "./Submenu";
+import "./App.css";
 
 const Sidebar = () => {
   const [inactive, setInactive] = useState(false);
 
   useEffect(() => {
     if (inactive) {
-      document.querySelectorAll(".sub-menu").forEach(el => {
+      document.querySelectorAll(".sub-menu").forEach((el) => {
         el.classList.remove("active");
       });
     }
@@ -26,10 +27,11 @@ const Sidebar = () => {
 
       <div className="main-menu">
         <ul>
-          {data.map(({ iconName, Name, options }) => (
+          {data.map(({ iconName, Name, link, options }) => (
             <Submenu
               Name={Name}
               iconName={iconName}
+              link={link}
               options={options}
               onClick={() => {
                 if (inactive) {

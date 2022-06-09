@@ -2,6 +2,7 @@ const data = [
   {
     iconName: "bi bi-speedometer2",
     Name: "Dashboard",
+    link: "/dashboard"
   },
   {
     iconName: "bi bi-cart-fill",
@@ -75,15 +76,19 @@ const data = [
   {
     iconName: "bi bi-geo-alt-fill",
     Name: "Locations",
+    link: "/location",
     options: [
       {
         optionName: "Country",
+        link: "/country"
       },
       {
         optionName: "State",
+        link: "/state"
       },
       {
         optionName: "City",
+        link: "/city"
       },
     ],
   },

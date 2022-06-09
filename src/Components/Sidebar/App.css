@@ -57,12 +57,11 @@ body {
 
 .sidebar-menu .main-menu .menu-item {
   text-decoration: none;
-  font-size: 15px;
+  font-size: 13px;
   display: block;
   font-weight: 500;
   cursor: pointer;
   color: gray;
-  margin-top: 5px;
 }
 
 .sidebar-menu .main-menu .menu-item:hover {

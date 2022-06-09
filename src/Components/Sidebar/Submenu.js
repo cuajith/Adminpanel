@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import { Link, Outlet } from "react-router-dom";
 
-const Submenu = ({ Name, iconName, options, onClick }) => {
-  const [inactive, setInactive] = useState(false);
+const Submenu = ({ Name, iconName, link, options, onClick, setInactive }) => {
   const [expand, setExpand] = useState(false);
+
+  const icon = expand ? (
+    <ExpandMoreIcon className="dropicon" />
+  ) : (
+    <ExpandLessIcon className="dropicon" />
+  );
+
   return (
     <div>
       <li onClick={onClick}>
@@ -12,14 +19,23 @@ const Submenu = ({ Name, iconName, options, onClick }) => {
           <div className="menu-icon">
             <i class={iconName}></i>
           </div>
-          <span>{Name}</span>
-          {options && <ExpandMoreIcon className="dropicon" />}
+          <span>
+            <a
+              href={link}
+              className={`menu-item ${setInactive ? "inactive" : ""}`}
+            >
+              {Name}
+            </a>
+          </span>
+          {options ? icon : ""}
         </a>
         {options &&
-          options.map(({ optionName }) => (
+          options.map(({ optionName, link }) => (
             <ul className={`sub-menu ${expand ? "active" : ""}`}>
               <li>
-                <a>{optionName}</a>
+                <a href={link} className="menu-item">
+                  {optionName}
+                </a>
               </li>
             </ul>
           ))}
