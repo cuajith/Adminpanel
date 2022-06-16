@@ -28,8 +28,8 @@ const Loginwithgoogle = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row pt-1">
-        <div className="col-11">
+      <div className="row">
+        <div className="col-12 w-100">
           <div className="row">
            
               {showLoginButton ? (

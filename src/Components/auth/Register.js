@@ -27,7 +27,7 @@ const Registration = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("/register", data)
+      .post("http://localhost:3001/register", data)
       .then((res) => {
         console.log(res.data);
       })

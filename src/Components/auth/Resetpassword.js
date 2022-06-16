@@ -10,12 +10,17 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import "./auth.css";
+import Createpassword from "./Createpassword";
 
 const Resetpassword = () => {
   const btnstyle = { marginTop: "28px ", backgroundColor: "#6d7f9f" };
   const [otp, setOtp] = useState(false);
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
+  const [otpVerify, setOtpVerify] = useState(false);
+  const [emailData, setEmailData] = useState("");
+  const [otpData, setOtpData] = useState("");
+
   const navigate = useNavigate();
 
   //counter, timer
@@ -35,29 +40,23 @@ const Resetpassword = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (data.otp) {
-      axios
-        .post("http://localhost:3001/verify-email", data)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
-    } else {
-      axios
-        .post("http://localhost:3001/send-otp", data)
-        .then((res) => console.log(res));
+    if (data.email) {
+      console.log(data);
+      let obj = {
+        email: data.email,
+      };
+      axios.post("http://localhost:3001/password/resetReq", obj).then((res) => {
+        console.log(res);
+        setOtp(!otp);
+        setEmailData(data.email);
+        
+      });
     }
     setEmail(data.email);
-    setOtp(true);
-    if (data.otp) {
-      navigate("/createpassword");
-    }
   };
 
   const handleClick = () => {
-    setOtp(!otp)
+    setOtp(!otp);
     reset();
   };
 
@@ -100,7 +99,6 @@ const Resetpassword = () => {
                     className={`form-control ${errors.email && "invalid"} ${
                       errors.mobile && "invalid"
                     } h-25`}
-                    
                     {...register("email", {
                       required: "Email is Required",
                       pattern: {
@@ -119,24 +117,30 @@ const Resetpassword = () => {
                   )}
                 </div>
                 {!otp ? (
-                  <Button
-                    type="submit"
-                    className="btn btn-secondary my-3 w-100 h-25"
-                    value="Get OTP"
-                    color="primary"
-                    variant="contained"
-                    style={btnstyle}
-                    fullWidth
+                  <div
+                    className={`button-style ${
+                      !otpVerify ? "" : "button-hide"
+                    }`}
                   >
-                    {" "}
-                    Get OTP{" "}
-                  </Button>
+                    <Button
+                      type="submit"
+                      value="Get OTP"
+                      color="primary"
+                      variant="contained"
+                      style={btnstyle}
+                      fullWidth
+                    >
+                      {" "}
+                      Get OTP{" "}
+                    </Button>
+                  </div>
                 ) : (
                   <div>
                     <input
                       placeholder="Enter 4 Digit OTP"
                       name="otp"
                       type="text"
+                      onInput={e => setOtpData(e.target.value)}
                       className={`form-control ${errors.otp && "invalid"} h-25`}
                       {...register("otp", {
                         required: "OTP is Required",
@@ -152,17 +156,8 @@ const Resetpassword = () => {
                       </small>
                     )}
 
-                    <Button
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      style={btnstyle}
-                      fullWidth
-                    >
-                      VERIFY
-                    </Button>
-
-                    {!show && counter != 0 ? (
+                    
+                      {!show && counter != 0 ? (
                       <Box mt={3}>
                         <Typography
                           fontWeight={500}
@@ -179,18 +174,22 @@ const Resetpassword = () => {
                       </Box>
                     ) : (
                       <Typography align="center">
-                        <NavLink to="" style={{ fontSize: "12px", textDecoration:"none" }}>
-                          <span
-                            onClick={handleClick}
-                          >
-                            {" "}
-                            Resend OTP{" "}
-                          </span>
+                        <NavLink
+                          to=""
+                          style={{ fontSize: "12px", textDecoration: "none" }}
+                        >
+                          <span onClick={handleClick}> Resend OTP </span>
                         </NavLink>
                       </Typography>
                     )}
+                    <Createpassword Email={emailData} Otp={otpData} />
                   </div>
                 )}
+                {/* {otpVerify && (
+                  <div>
+                    <Createpassword Email={emailData} Otp={otpData} />
+                  </div>
+                )} */}
               </div>
             </form>
           </div>

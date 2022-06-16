@@ -12,7 +12,7 @@ export default function Home() {
   const headers = {
     "Content-Type": "application/json",
     Authorization:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjhjYmYwZDE3MjY4ZDQwZjFiMGYyNzMiLCJpYXQiOjE2NTMzOTUzNjQsImV4cCI6MTY1NDI1OTM2NH0.9ddtkOqK08TojwuIqXJH2HOw-KrwJhZndF2s5w7HYBk",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjhjYmYwZDE3MjY4ZDQwZjFiMGYyNzMiLCJpYXQiOjE2NTQ4ODA1NzgsImV4cCI6MTY1NTc0NDU3OH0.l7COlseJmU2hEzmzc58qxZkuXtyxJaWnNuhO5uv33wA",
   };
   React.useEffect(() => {
     let abortController = new AbortController();
