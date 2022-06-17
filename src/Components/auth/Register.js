@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import showPassword from "./show-password.svg";
+import hidePassword from "./hide-password.svg";
 import "./auth.css";
+import EmailVerification from "./EmailVerification";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
-  
-  const formSchema = Yup.object().shape({
-    password: Yup.string()
-      .required('Password is mandatory')
-      .min(3, 'Password must be at 3 char long'),
-    confirmPwd: Yup.string()
-      .oneOf([Yup.ref('password')], 'Passwords does not match'),
-  })
-
-  const formOptions = { resolver: yupResolver(formSchema) }
+  const [pwd, setPwd] = useState("");
+  const [cpwd, setCpwd] = useState("");
+  const [error, setError] = useState("");
+  const [isRevealPwd, setIsRevealPwd] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -23,18 +22,43 @@ const Registration = () => {
     formState: { errors },
     reset,
     trigger,
-  } = useForm(formOptions);
+  } = useForm();
+
+  function validate() {
+    let error = {};
+    if (pwd.length === 0) {
+      error["pwd"] = "Please enter your password";
+    }
+
+    if (pwd.length < 8) {
+      error["pwd"] = "Password must contain at least 8 character";
+    }
+
+    if (cpwd.length === 0) {
+      error["cpwd"] = "Please enter your confirm password";
+    }
+
+    if (pwd !== null && cpwd !== null) {
+      if (pwd !== cpwd) {
+        error["cpwd"] = "Password don't match";
+      }
+    }
+    setError(error);
+  }
 
   const onSubmit = (data) => {
-    axios
-      .post("http://localhost:3001/register", data)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-    reset();
+    if (validate) {
+      axios
+        .post("http://localhost:3001/register", data)
+        .then((res) => {
+         navigate('/emailVerification');
+         console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+      reset();
+    }
   };
 
   return (
@@ -45,7 +69,7 @@ const Registration = () => {
           background: "#fff",
           boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
           transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
-          marginTop: "20px"
+          marginTop: "20px",
         }}
       >
         <div className="col-12">
@@ -68,9 +92,7 @@ const Registration = () => {
                   </label>
                   <input
                     type="text"
-                    className={`form-control ${
-                      errors.name && "invalid"
-                    } h-25`}
+                    className={`form-control ${errors.name && "invalid"} h-25`}
                     {...register("name", {
                       required: "name is Required",
                     })}
@@ -79,12 +101,10 @@ const Registration = () => {
                     }}
                   />
                   {errors.name && (
-                    <small className="text-danger">
-                      {errors.name.message}
-                    </small>
+                    <small className="text-danger">{errors.name.message}</small>
                   )}
                 </div>
-               
+
                 <div className="form-group">
                   <label
                     className="col-form-label"
@@ -119,27 +139,21 @@ const Registration = () => {
                   >
                     Password:
                   </label>
-                  <input
-                    type="password"
-                    className={`form-control ${
-                      errors.password && "invalid"
-                    } h-25`}
-                    {...register("password", {
-                      required: "Password is Required",
-                      pattern: {
-                        value: "",
-                        message: "Enter valid password",
-                      },
-                    })}
-                    onKeyUp={() => {
-                      trigger("password");
-                    }}
-                  />
-                  {errors.password && (
-                    <small className="text-danger">
-                      {errors.password.message}
-                    </small>
-                  )}
+                  <div className="pwd-container">
+                    <input
+                      name="pwd"
+                      className="form-control"
+                      type={isRevealPwd ? "text" : "password"}
+                      value={pwd}
+                      onChange={(e) => setPwd(e.target.value)}
+                    />
+                    <img
+                      title={isRevealPwd ? "Hide password" : "Show password"}
+                      src={isRevealPwd ? hidePassword : showPassword}
+                      onClick={() => setIsRevealPwd((prevState) => !prevState)}
+                    />
+                    <div className="text-danger">{error.pwd}</div>
+                  </div>
                 </div>
                 <div className="form-group">
                   <label
@@ -148,18 +162,21 @@ const Registration = () => {
                   >
                     Confirm Password:
                   </label>
-                  <input
-                    name="confirmPwd"
-                    type="password"
-                    className={`form-control ${
-                      errors.confirmPwd && "invalid"
-                    }`}
-                  />
-                  {errors.confirmPwd && (
-                    <small className="text-danger">
-                      {errors.confirmPwd.message}
-                    </small>
-                  )}
+                  <div className="pwd-container">
+                    <input
+                      name="cpwd"
+                      className="form-control"
+                      type={isRevealPwd ? "text" : "password"}
+                      value={cpwd}
+                      onChange={(e) => setCpwd(e.target.value)}
+                    />
+                    <img
+                      title={isRevealPwd ? "Hide password" : "Show password"}
+                      src={isRevealPwd ? hidePassword : showPassword}
+                      onClick={() => setIsRevealPwd((prevState) => !prevState)}
+                    />
+                    <div className="text-danger">{error.cpwd}</div>
+                  </div>
                 </div>
                 <div className="form-group">
                   <label

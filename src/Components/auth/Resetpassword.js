@@ -55,10 +55,16 @@ const Resetpassword = () => {
     setEmail(data.email);
   };
 
-  const handleClick = () => {
-    setOtp(!otp);
-    reset();
-  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    let obj = {
+      email: emailData
+    }
+    axios.post("http://localhost:3001/password/resetReq", obj ).then((res) => {
+      console.log(res);
+      setCounter(10)
+    })
+   };
 
   return (
     <div className="container pt-5">
@@ -96,6 +102,7 @@ const Resetpassword = () => {
                   <input
                     type="text"
                     placeholder="Email or mobile"
+                    onInput={e=> setEmail(e.target.value)}
                     className={`form-control ${errors.email && "invalid"} ${
                       errors.mobile && "invalid"
                     } h-25`}
@@ -185,11 +192,6 @@ const Resetpassword = () => {
                     <Createpassword Email={emailData} Otp={otpData} />
                   </div>
                 )}
-                {/* {otpVerify && (
-                  <div>
-                    <Createpassword Email={emailData} Otp={otpData} />
-                  </div>
-                )} */}
               </div>
             </form>
           </div>

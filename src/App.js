@@ -9,6 +9,7 @@ import Home from "./Components/views/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Resetpassword from "./Components/auth/Resetpassword";
 import Createpassword from './Components/auth/Createpassword';
+import EmailVerification from "./Components/auth/EmailVerification";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
             <Route exact path="/" element={<Login />} />
             <Route exact path="/signup" element={<Registration />} />
+            <Route exact path="/emailVerification" element={<EmailVerification />} />
             <Route exact path="/otp" element={<Resetpassword />} /> 
             <Route exact path='/createpassword' element={<Createpassword />} />
             <Route exact path='/sidebar' element={<Sidebar />} />
